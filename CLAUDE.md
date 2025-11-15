@@ -171,6 +171,37 @@ Stack names are derived from relative paths (e.g., "category1-stack1"). Director
 
 When working with this codebase, follow these conventions:
 
+### Line Length
+- **Maximum line length: 80 characters**
+- Break long lines using parentheses for implicit continuation
+- Example:
+  ```python
+  msg = (
+      f"Long message that would exceed 80 characters "
+      f"split across multiple lines"
+  )
+  ```
+
+### Import Organization
+- **Imports must be alphabetized** within their respective groups
+- Group imports in this order:
+  1. Standard library imports
+  2. Third-party library imports (e.g., `yaml`)
+  3. Local application imports
+- **Absolute imports** for parent-level modules: Use `from composer.module import Class` (not `from ..module import Class`)
+- **Relative imports** only for immediate siblings within the same package
+- Example:
+  ```python
+  import subprocess
+  from dataclasses import dataclass, field
+  from pathlib import Path
+  from typing import Dict, List, Optional
+
+  import yaml
+
+  from composer.stack_manager import StackManager
+  ```
+
 ### YAML Formatting
 - All YAML files must be written with **2-space indentation**
 - Use `yaml.dump(data, f, default_flow_style=False, sort_keys=False, indent=2)` when writing metadata files
@@ -180,11 +211,6 @@ When working with this codebase, follow these conventions:
 - **Command implementations** are organized in individual files under `src/composer/commands/`
 - Each command file contains a single `cmd_*` function that implements the command logic
 - Command files do NOT have module-level docstrings (the folder structure and function name make the purpose clear)
-
-### Import Conventions
-- **Absolute imports** for parent-level modules: Use `from composer.module import Class` (not `from ..module import Class`)
-- **Relative imports** only for immediate siblings within the same package
-- Example: Command files import `from composer.stack_manager import StackManager` (absolute)
 
 ### Documentation
 - **All docstrings** must be complete sentences ending with punctuation (period)
@@ -200,3 +226,5 @@ When working with this codebase, follow these conventions:
 4. **Current directory**: StackManager discovers from cwd() by default - run from your stacks root directory
 5. **Missing metadata**: Stacks work without .stack-meta.yaml (uses defaults), but validation warns about missing metadata
 6. **YAML indentation**: Always use 2-space indentation when writing YAML files (set `indent=2` in yaml.dump)
+7. **Line length**: Keep all lines at or under 80 characters for readability
+8. **Import order**: Always alphabetize imports within their groups (stdlib, third-party, local)

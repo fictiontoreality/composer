@@ -108,7 +108,10 @@ class StackManager:
         return count
 
     def rename_category(self, old_category: str, new_category: str) -> int:
-        """Rename a category across all stacks. Returns count of affected stacks."""
+        """Rename a category across all stacks.
+
+        Returns count of affected stacks.
+        """
         count = 0
         for stack in self.stacks.values():
             if stack.category == old_category:

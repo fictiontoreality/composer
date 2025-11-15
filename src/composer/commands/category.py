@@ -11,14 +11,20 @@ def cmd_category(manager: StackManager, args) -> None:
             print("No categories found")
             return
 
-        print(f"\nFound {len(categories)} unique categor{'ies' if len(categories) != 1 else 'y'}:\n")
+        plural = 'ies' if len(categories) != 1 else 'y'
+        print(f"\nFound {len(categories)} unique categor{plural}:\n")
         for category, subcategory in categories:
             # Count how many stacks use this category
-            count = sum(1 for s in manager.stacks.values()
-                       if s.category == category and s.subcategory == subcategory)
+            count = sum(
+                1 for s in manager.stacks.values()
+                if s.category == category and s.subcategory == subcategory
+            )
 
-            display = f"{category}/{subcategory}" if subcategory else category
-            print(f"  • {display} ({count} stack{'s' if count != 1 else ''})")
+            display = (
+                f"{category}/{subcategory}" if subcategory else category
+            )
+            plural = 's' if count != 1 else ''
+            print(f"  • {display} ({count} stack{plural})")
 
     elif args.category_action == 'set':
         stack = manager.get_stack(args.stack)
@@ -26,18 +32,33 @@ def cmd_category(manager: StackManager, args) -> None:
             print(f"Stack '{args.stack}' not found")
             sys.exit(1)
 
-        old_category = f"{stack.category}/{stack.subcategory}" if stack.subcategory else stack.category
+        if stack.subcategory:
+            old_category = f"{stack.category}/{stack.subcategory}"
+        else:
+            old_category = stack.category
 
         stack.category = args.new_category
         stack.subcategory = args.subcategory or ""
         stack.save_metadata()
 
-        new_category = f"{stack.category}/{stack.subcategory}" if stack.subcategory else stack.category
-        print(f"✓ Changed category for {stack.name}: {old_category} → {new_category}")
+        if stack.subcategory:
+            new_category = f"{stack.category}/{stack.subcategory}"
+        else:
+            new_category = stack.category
+        msg = (
+            f"✓ Changed category for {stack.name}: "
+            f"{old_category} → {new_category}"
+        )
+        print(msg)
 
     elif args.category_action == 'rename':
         count = manager.rename_category(args.old_category, args.new_category)
         if count > 0:
-            print(f"✓ Renamed category '{args.old_category}' to '{args.new_category}' across {count} stack{'s' if count != 1 else ''}")
+            plural = 's' if count != 1 else ''
+            msg = (
+                f"✓ Renamed category '{args.old_category}' to "
+                f"'{args.new_category}' across {count} stack{plural}"
+            )
+            print(msg)
         else:
             print(f"Category '{args.old_category}' not found on any stacks")

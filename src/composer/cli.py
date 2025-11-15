@@ -24,7 +24,6 @@ Usage:
 import argparse
 import sys
 
-from .stack_manager import StackManager
 from .commands import (
     cmd_list,
     cmd_show,
@@ -38,6 +37,7 @@ from .commands import (
     cmd_tag,
     cmd_category,
 )
+from .stack_manager import StackManager
 
 
 def main():
@@ -59,24 +59,42 @@ def main():
 
     # up
     up_parser = subparsers.add_parser('up', help='Start stack(s)')
-    up_parser.add_argument('target', nargs='?', help='Stack name or category')
-    up_parser.add_argument('--all', action='store_true', help='Start all stacks')
-    up_parser.add_argument('--category', help='Start all stacks in category')
-    up_parser.add_argument('--priority', action='store_true', help='Start in priority order')
-    up_parser.add_argument('--with-deps', action='store_true', help='Start dependencies first')
+    up_parser.add_argument(
+        'target', nargs='?', help='Stack name or category'
+    )
+    up_parser.add_argument(
+        '--all', action='store_true', help='Start all stacks'
+    )
+    up_parser.add_argument(
+        '--category', help='Start all stacks in category'
+    )
+    up_parser.add_argument(
+        '--priority', action='store_true', help='Start in priority order'
+    )
+    up_parser.add_argument(
+        '--with-deps', action='store_true', help='Start dependencies first'
+    )
 
     # down
     down_parser = subparsers.add_parser('down', help='Stop stack(s)')
-    down_parser.add_argument('target', nargs='?', help='Stack name or category')
-    down_parser.add_argument('--all', action='store_true', help='Stop all stacks')
-    down_parser.add_argument('--category', help='Stop all stacks in category')
+    down_parser.add_argument(
+        'target', nargs='?', help='Stack name or category'
+    )
+    down_parser.add_argument(
+        '--all', action='store_true', help='Stop all stacks'
+    )
+    down_parser.add_argument(
+        '--category', help='Stop all stacks in category'
+    )
 
     # restart
     restart_parser = subparsers.add_parser('restart', help='Restart a stack')
     restart_parser.add_argument('stack', help='Stack name')
 
     # status
-    status_parser = subparsers.add_parser('status', help='Show status of stacks')
+    status_parser = subparsers.add_parser(
+        'status', help='Show status of stacks'
+    )
     status_parser.add_argument('--category', help='Filter by category')
 
     # search
@@ -91,43 +109,69 @@ def main():
 
     # tag
     tag_parser = subparsers.add_parser('tag', help='Manage tags')
-    tag_subparsers = tag_parser.add_subparsers(dest='tag_action', help='Tag actions')
+    tag_subparsers = tag_parser.add_subparsers(
+        dest='tag_action', help='Tag actions'
+    )
 
     # tag list
     tag_subparsers.add_parser('list', help='List all unique tags')
 
     # tag add
-    tag_add_parser = tag_subparsers.add_parser('add', help='Add tag(s) to a stack')
+    tag_add_parser = tag_subparsers.add_parser(
+        'add', help='Add tag(s) to a stack'
+    )
     tag_add_parser.add_argument('stack', help='Stack name')
     tag_add_parser.add_argument('tags', nargs='+', help='Tag(s) to add')
 
     # tag remove
-    tag_remove_parser = tag_subparsers.add_parser('remove', help='Remove tag(s) from a stack')
+    tag_remove_parser = tag_subparsers.add_parser(
+        'remove', help='Remove tag(s) from a stack'
+    )
     tag_remove_parser.add_argument('stack', help='Stack name')
-    tag_remove_parser.add_argument('tags', nargs='+', help='Tag(s) to remove')
+    tag_remove_parser.add_argument(
+        'tags', nargs='+', help='Tag(s) to remove'
+    )
 
     # tag rename
-    tag_rename_parser = tag_subparsers.add_parser('rename', help='Rename a tag across all stacks')
+    tag_rename_parser = tag_subparsers.add_parser(
+        'rename', help='Rename a tag across all stacks'
+    )
     tag_rename_parser.add_argument('old_tag', help='Old tag name')
     tag_rename_parser.add_argument('new_tag', help='New tag name')
 
     # category
-    category_parser = subparsers.add_parser('category', help='Manage categories')
-    category_subparsers = category_parser.add_subparsers(dest='category_action', help='Category actions')
+    category_parser = subparsers.add_parser(
+        'category', help='Manage categories'
+    )
+    category_subparsers = category_parser.add_subparsers(
+        dest='category_action', help='Category actions'
+    )
 
     # category list
-    category_subparsers.add_parser('list', help='List all unique categories')
+    category_subparsers.add_parser(
+        'list', help='List all unique categories'
+    )
 
     # category set
-    category_set_parser = category_subparsers.add_parser('set', help='Set category for a stack')
+    category_set_parser = category_subparsers.add_parser(
+        'set', help='Set category for a stack'
+    )
     category_set_parser.add_argument('stack', help='Stack name')
     category_set_parser.add_argument('new_category', help='Category name')
-    category_set_parser.add_argument('subcategory', nargs='?', help='Subcategory name (optional)')
+    category_set_parser.add_argument(
+        'subcategory', nargs='?', help='Subcategory name (optional)'
+    )
 
     # category rename
-    category_rename_parser = category_subparsers.add_parser('rename', help='Rename a category across all stacks')
-    category_rename_parser.add_argument('old_category', help='Old category name')
-    category_rename_parser.add_argument('new_category', help='New category name')
+    category_rename_parser = category_subparsers.add_parser(
+        'rename', help='Rename a category across all stacks'
+    )
+    category_rename_parser.add_argument(
+        'old_category', help='Old category name'
+    )
+    category_rename_parser.add_argument(
+        'new_category', help='New category name'
+    )
 
     args = parser.parse_args()
 

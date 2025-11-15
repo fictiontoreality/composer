@@ -15,10 +15,18 @@ def cmd_show(manager: StackManager, args) -> None:
     print(f"\nStack: {stack.name}")
     print(f"{'='*60}")
     print(f"Description:  {stack.description or 'N/A'}")
-    print(f"Category:     {stack.category}/{stack.subcategory}" if stack.subcategory else f"Category:     {stack.category}")
-    print(f"Tags:         {', '.join(stack.tags) if stack.tags else 'none'}")
+    if stack.subcategory:
+        category_display = f"{stack.category}/{stack.subcategory}"
+    else:
+        category_display = stack.category
+    print(f"Category:     {category_display}")
+    tags_display = ', '.join(stack.tags) if stack.tags else 'none'
+    print(f"Tags:         {tags_display}")
     print(f"Path:         {stack.path}")
-    print(f"Status:       {status['status']} ({status['running']}/{status['containers']} containers)")
+    containers_info = (
+        f"({status['running']}/{status['containers']} containers)"
+    )
+    print(f"Status:       {status['status']} {containers_info}")
     print(f"Auto-start:   {'yes' if stack.auto_start else 'no'}")
     if stack.auto_start:
         print(f"Priority:     {stack.priority}")

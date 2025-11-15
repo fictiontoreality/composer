@@ -1,6 +1,6 @@
+import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
-import subprocess
 from typing import Dict, List, Optional
 
 import yaml
@@ -93,7 +93,9 @@ class Stack:
                     yaml.safe_load(line)
                     for line in result.stdout.strip().split('\n')
                 ]
-                running = sum(1 for c in containers if c.get('State') == 'running')
+                running = sum(
+                    1 for c in containers if c.get('State') == 'running'
+                )
                 return {
                     'status': 'running' if running > 0 else 'stopped',
                     'containers': len(containers),

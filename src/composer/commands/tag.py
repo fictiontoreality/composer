@@ -49,13 +49,20 @@ def cmd_tag(manager: StackManager, args) -> None:
 
         if removed:
             stack.save_metadata()
-            print(f"✓ Removed tag(s) from {stack.name}: {', '.join(removed)}")
+            removed_tags = ', '.join(removed)
+            print(f"✓ Removed tag(s) from {stack.name}: {removed_tags}")
         else:
-            print(f"None of the specified tags were found on {stack.name}")
+            msg = f"None of the specified tags were found on {stack.name}"
+            print(msg)
 
     elif args.tag_action == 'rename':
         count = manager.rename_tag(args.old_tag, args.new_tag)
         if count > 0:
-            print(f"✓ Renamed '{args.old_tag}' to '{args.new_tag}' across {count} stack{'s' if count != 1 else ''}")
+            plural = 's' if count != 1 else ''
+            msg = (
+                f"✓ Renamed '{args.old_tag}' to '{args.new_tag}' "
+                f"across {count} stack{plural}"
+            )
+            print(msg)
         else:
             print(f"Tag '{args.old_tag}' not found on any stacks")

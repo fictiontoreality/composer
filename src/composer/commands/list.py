@@ -27,7 +27,11 @@ def cmd_list(manager: StackManager, args) -> None:
             if stack.description:
                 print(f"     {stack.description}")
             print(f"     Path: {stack.path}")
-            print(f"     Tags: {', '.join(stack.tags) if stack.tags else 'none'}")
-            print(f"     Status: {status['status']} ({status['running']}/{status['containers']} containers)")
+            tags_display = ', '.join(stack.tags) if stack.tags else 'none'
+            print(f"     Tags: {tags_display}")
+            containers_info = (
+                f"({status['running']}/{status['containers']} containers)"
+            )
+            print(f"     Status: {status['status']} {containers_info}")
             if stack.auto_start:
                 print(f"     Auto-start: yes (priority {stack.priority})")
