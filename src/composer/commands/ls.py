@@ -1,7 +1,7 @@
 from composer.stack_manager import StackManager
 
 
-def cmd_list(manager: StackManager, args) -> None:
+def cmd_ls(manager: StackManager, args) -> None:
     """List all stacks."""
     stacks = manager.list_stacks(category=args.category, tag=args.tag)
 

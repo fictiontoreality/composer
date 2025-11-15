@@ -19,10 +19,11 @@ The tool is packaged as a proper Python package and can be installed via pip/pip
 pip install -e .
 
 # Run commands (after installation)
-composer list
-composer list -c video          # Filter by category (shortcut)
-composer list --category video  # Filter by category (full flag)
-composer list -t production     # Filter by tag (shortcut)
+composer ls                     # List all stacks
+composer ls -c video            # Filter by category (shortcut)
+composer ls --category video    # Filter by category (full flag)
+composer ls -t production       # Filter by tag (shortcut)
+composer list                   # Alias for 'ls'
 
 composer show <stack-name>
 
@@ -127,13 +128,15 @@ composer/
 ### Filtering Support
 
 Commands support multiple filtering options:
-- **`list`**: Filter by `--category` or `--tag`
+- **`ls`** (alias: `list`): Filter by `--category` or `--tag`
 - **`up`**: Filter by `--all`, `--category`, or `--tag`
 - **`down`**: Filter by `--all`, `--category`, or `--tag`
 - **`restart`**: Filter by `--all`, `--category`, or `--tag`
 - **`status`**: Filter by `--category`
 
 All category/tag filters support shortcuts: `-c` for category, `-t` for tag.
+
+**Command Aliases**: Similar to Docker Compose, `list` is an alias for `ls`.
 
 ### Key Design Patterns
 
@@ -263,3 +266,4 @@ When working with this codebase, follow these conventions:
 7. **Line length**: Keep all lines at or under 80 characters for readability
 8. **Import order**: Always alphabetize imports within their groups (stdlib, third-party, local)
 9. **CLI shortcuts**: `-c` is available as a shortcut for `--category`, `-t` for `--tag` in all commands that accept these flags
+10. **Command aliases**: The `list` command is an alias for `ls` (similar to Docker Compose interface)

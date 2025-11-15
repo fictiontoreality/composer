@@ -3,7 +3,8 @@
 composer - Docker Compose Stack Manager with Metadata Support
 
 Usage:
-    composer list [-c|--category=CAT] [-t|--tag=TAG]
+    composer ls [-c|--category=CAT] [-t|--tag=TAG]
+    composer list [-c|--category=CAT] [-t|--tag=TAG]  (alias for ls)
     composer show <stack>
     composer up <stack|--all> [-c CAT] [-t TAG] [--priority]
     composer down <stack|--all> [-c CAT] [-t TAG]
@@ -25,17 +26,17 @@ import argparse
 import sys
 
 from .commands import (
-    cmd_list,
-    cmd_show,
-    cmd_up,
-    cmd_down,
-    cmd_restart,
-    cmd_status,
-    cmd_search,
     cmd_autostart,
-    cmd_validate,
-    cmd_tag,
     cmd_category,
+    cmd_down,
+    cmd_ls,
+    cmd_restart,
+    cmd_search,
+    cmd_show,
+    cmd_status,
+    cmd_tag,
+    cmd_up,
+    cmd_validate,
 )
 from .stack_manager import StackManager
 
@@ -48,12 +49,14 @@ def main():
 
     subparsers = parser.add_subparsers(dest='command', help='Commands')
 
-    # list
-    list_parser = subparsers.add_parser('list', help='List stacks')
-    list_parser.add_argument(
+    # ls (with 'list' alias)
+    ls_parser = subparsers.add_parser(
+        'ls', aliases=['list'], help='List stacks'
+    )
+    ls_parser.add_argument(
         '-c', '--category', help='Filter by category'
     )
-    list_parser.add_argument('-t', '--tag', help='Filter by tag')
+    ls_parser.add_argument('-t', '--tag', help='Filter by tag')
 
     # show
     show_parser = subparsers.add_parser('show', help='Show stack details')
@@ -205,7 +208,8 @@ def main():
 
     # Dispatch to command
     commands = {
-        'list': cmd_list,
+        'ls': cmd_ls,
+        'list': cmd_ls,  # Alias for ls
         'show': cmd_show,
         'up': cmd_up,
         'down': cmd_down,
