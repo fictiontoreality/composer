@@ -53,11 +53,25 @@ composer/
 ├── pyproject.toml          # Package metadata and dependencies
 ├── README.md               # User documentation
 ├── CLAUDE.md              # Developer documentation
-├── main.py                # Legacy entry point (kept for compatibility)
 └── src/
     └── composer/
-        ├── __init__.py    # Package initialization
-        └── cli.py         # Main CLI implementation
+        ├── __init__.py         # Package initialization
+        ├── cli.py              # Main CLI implementation and argument parsing
+        ├── stack.py            # Stack dataclass with metadata operations
+        ├── stack_manager.py    # StackManager orchestrator class
+        └── commands/           # Individual command implementations
+            ├── __init__.py
+            ├── list.py
+            ├── show.py
+            ├── up.py
+            ├── down.py
+            ├── restart.py
+            ├── status.py
+            ├── search.py
+            ├── autostart.py
+            ├── validate.py
+            ├── tag.py
+            └── category.py
 ```
 
 **Entry Points**: The package defines a console script entry point `composer` that maps to `composer.cli:main`, making the command available system-wide after installation.
@@ -153,6 +167,31 @@ root/
 
 Stack names are derived from relative paths (e.g., "category1-stack1"). Directories starting with '.' are skipped during discovery.
 
+## Code Style Conventions
+
+When working with this codebase, follow these conventions:
+
+### YAML Formatting
+- All YAML files must be written with **2-space indentation**
+- Use `yaml.dump(data, f, default_flow_style=False, sort_keys=False, indent=2)` when writing metadata files
+- This ensures consistent, readable YAML output across all generated files
+
+### Module Organization
+- **Command implementations** are organized in individual files under `src/composer/commands/`
+- Each command file contains a single `cmd_*` function that implements the command logic
+- Command files do NOT have module-level docstrings (the folder structure and function name make the purpose clear)
+
+### Import Conventions
+- **Absolute imports** for parent-level modules: Use `from composer.module import Class` (not `from ..module import Class`)
+- **Relative imports** only for immediate siblings within the same package
+- Example: Command files import `from composer.stack_manager import StackManager` (absolute)
+
+### Documentation
+- **All docstrings** must be complete sentences ending with punctuation (period)
+- Class docstrings: `"""Represents a Docker Compose stack with metadata."""`
+- Method docstrings: `"""Load metadata from .stack-meta.yaml."""`
+- Function docstrings: `"""List all stacks."""`
+
 ## Common Gotchas
 
 1. **Stack naming**: Stack names use hyphens (e.g., "data-redis"), derived from path with os.sep replaced by '-'
@@ -160,3 +199,4 @@ Stack names are derived from relative paths (e.g., "category1-stack1"). Director
 3. **JSON parsing**: docker compose ps output is newline-delimited JSON (one object per line), not a JSON array
 4. **Current directory**: StackManager discovers from cwd() by default - run from your stacks root directory
 5. **Missing metadata**: Stacks work without .stack-meta.yaml (uses defaults), but validation warns about missing metadata
+6. **YAML indentation**: Always use 2-space indentation when writing YAML files (set `indent=2` in yaml.dump)
