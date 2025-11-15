@@ -101,7 +101,8 @@ class Stack:
 
         # Write to file
         with open(self.meta_file, 'w') as f:
-            yaml.dump(meta, f, default_flow_style=False, sort_keys=False)
+            yaml.dump(meta, f, default_flow_style=False,
+                      sort_keys=False, indent=2)
 
     def get_status(self) -> Dict:
         """Get running status using docker compose ps"""
