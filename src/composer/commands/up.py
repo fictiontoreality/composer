@@ -11,7 +11,15 @@ def cmd_up(manager: StackManager, args) -> None:
         stacks_to_start = list(manager.stacks.values())
     elif args.category:
         stacks_to_start = manager.get_category_stacks(args.category)
+    elif args.tag:
+        stacks_to_start = [
+            s for s in manager.stacks.values() if args.tag in s.tags
+        ]
     else:
+        if not args.target:
+            print("Error: Provide a stack name or use --all, -c, or -t")
+            sys.exit(1)
+
         stack = manager.get_stack(args.target)
         if not stack:
             print(f"Stack '{args.target}' not found")

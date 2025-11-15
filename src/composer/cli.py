@@ -3,12 +3,12 @@
 composer - Docker Compose Stack Manager with Metadata Support
 
 Usage:
-    composer list [--category=CAT] [--tag=TAG]
+    composer list [-c|--category=CAT] [-t|--tag=TAG]
     composer show <stack>
-    composer up <stack|category|--all> [--priority]
-    composer down <stack|category|--all>
-    composer restart <stack>
-    composer status [--category=CAT]
+    composer up <stack|--all> [-c CAT] [-t TAG] [--priority]
+    composer down <stack|--all> [-c CAT] [-t TAG]
+    composer restart <stack|--all> [-c CAT] [-t TAG]
+    composer status [-c|--category=CAT]
     composer search <term>
     composer autostart
     composer validate
@@ -50,8 +50,10 @@ def main():
 
     # list
     list_parser = subparsers.add_parser('list', help='List stacks')
-    list_parser.add_argument('--category', help='Filter by category')
-    list_parser.add_argument('--tag', help='Filter by tag')
+    list_parser.add_argument(
+        '-c', '--category', help='Filter by category'
+    )
+    list_parser.add_argument('-t', '--tag', help='Filter by tag')
 
     # show
     show_parser = subparsers.add_parser('show', help='Show stack details')
@@ -66,7 +68,10 @@ def main():
         '--all', action='store_true', help='Start all stacks'
     )
     up_parser.add_argument(
-        '--category', help='Start all stacks in category'
+        '-c', '--category', help='Start all stacks in category'
+    )
+    up_parser.add_argument(
+        '-t', '--tag', help='Start all stacks with tag'
     )
     up_parser.add_argument(
         '--priority', action='store_true', help='Start in priority order'
@@ -84,18 +89,34 @@ def main():
         '--all', action='store_true', help='Stop all stacks'
     )
     down_parser.add_argument(
-        '--category', help='Stop all stacks in category'
+        '-c', '--category', help='Stop all stacks in category'
+    )
+    down_parser.add_argument(
+        '-t', '--tag', help='Stop all stacks with tag'
     )
 
     # restart
-    restart_parser = subparsers.add_parser('restart', help='Restart a stack')
-    restart_parser.add_argument('stack', help='Stack name')
+    restart_parser = subparsers.add_parser('restart', help='Restart stack(s)')
+    restart_parser.add_argument(
+        'target', nargs='?', help='Stack name or category'
+    )
+    restart_parser.add_argument(
+        '--all', action='store_true', help='Restart all stacks'
+    )
+    restart_parser.add_argument(
+        '-c', '--category', help='Restart all stacks in category'
+    )
+    restart_parser.add_argument(
+        '-t', '--tag', help='Restart all stacks with tag'
+    )
 
     # status
     status_parser = subparsers.add_parser(
         'status', help='Show status of stacks'
     )
-    status_parser.add_argument('--category', help='Filter by category')
+    status_parser.add_argument(
+        '-c', '--category', help='Filter by category'
+    )
 
     # search
     search_parser = subparsers.add_parser('search', help='Search stacks')

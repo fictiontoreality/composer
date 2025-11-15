@@ -20,14 +20,37 @@ pip install -e .
 
 # Run commands (after installation)
 composer list
+composer list -c video          # Filter by category (shortcut)
+composer list --category video  # Filter by category (full flag)
+composer list -t production     # Filter by tag (shortcut)
+
 composer show <stack-name>
+
+# Start, stop, restart with filters
 composer up <stack-name>
+composer up -c video            # Start all stacks in category
+composer up -t production       # Start all stacks with tag
+composer up --all               # Start all stacks
+
 composer down <stack-name>
+composer down -c video          # Stop all stacks in category
+composer down -t production     # Stop all stacks with tag
+composer down --all             # Stop all stacks
+
+composer restart <stack-name>
+composer restart -c video       # Restart all stacks in category
+composer restart -t production  # Restart all stacks with tag
+composer restart --all          # Restart all stacks
+
 composer status
+composer status -c video        # Show status filtered by category
+
 composer validate
 composer tag list
 composer category list
 ```
+
+**Tip**: Use `-c` as a shortcut for `--category` and `-t` as a shortcut for `--tag`.
 
 Alternatively, run directly from source:
 
@@ -100,6 +123,17 @@ composer/
 3. Dispatches to command function (e.g., `cmd_up`, `cmd_list`)
 4. Command functions use StackManager to find/filter stacks
 5. Stack methods execute docker compose commands via subprocess
+
+### Filtering Support
+
+Commands support multiple filtering options:
+- **`list`**: Filter by `--category` or `--tag`
+- **`up`**: Filter by `--all`, `--category`, or `--tag`
+- **`down`**: Filter by `--all`, `--category`, or `--tag`
+- **`restart`**: Filter by `--all`, `--category`, or `--tag`
+- **`status`**: Filter by `--category`
+
+All category/tag filters support shortcuts: `-c` for category, `-t` for tag.
 
 ### Key Design Patterns
 
@@ -228,3 +262,4 @@ When working with this codebase, follow these conventions:
 6. **YAML indentation**: Always use 2-space indentation when writing YAML files (set `indent=2` in yaml.dump)
 7. **Line length**: Keep all lines at or under 80 characters for readability
 8. **Import order**: Always alphabetize imports within their groups (stdlib, third-party, local)
+9. **CLI shortcuts**: `-c` is available as a shortcut for `--category`, `-t` for `--tag` in all commands that accept these flags
