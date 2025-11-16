@@ -1,0 +1,7 @@
+name: stack-b
+description: Auto-start test stack
+category: production
+tags:
+  - prod
+priority: 1
+auto_start: true

@@ -1,0 +1,6 @@
+name: stack-a
+description: Test stack A
+category: test
+tags:
+  - dev
+priority: 3

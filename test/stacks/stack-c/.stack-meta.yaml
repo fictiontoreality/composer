@@ -1,0 +1,9 @@
+name: stack-c
+description: Stack with dependencies
+category: test
+subcategory: integration
+tags:
+  - backend
+depends_on:
+  - stack-a
+priority: 4

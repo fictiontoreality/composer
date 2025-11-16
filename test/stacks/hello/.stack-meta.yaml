@@ -1,0 +1,7 @@
+name: hello
+description: Test hello-world stack
+category: test
+tags:
+  - dev
+  - testing
+priority: 3

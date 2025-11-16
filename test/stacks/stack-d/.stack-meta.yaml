@@ -1,0 +1,6 @@
+name: stack-d
+description: Frontend test stack
+category: app
+tags:
+  - frontend
+priority: 5
