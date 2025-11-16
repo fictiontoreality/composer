@@ -31,9 +31,10 @@ The Docker compose ecosystem has tons of tools for container orchestration (Kube
 
 ### **`.stack-meta.yaml`** (in each compose directory)
 
+Place a `.stack-meta.yaml` file in each directory containing a `docker-compose.yml` to provide metadata and configuration for that stack.
+
 ```yaml
 # video/transcoding/.stack-meta.yaml
-name: transcoding
 description: "Video transcoding service using FFmpeg"
 
 # Organization
@@ -44,12 +45,11 @@ tags: [media, gpu, production, high-priority]
 # Behavior
 auto_start: true
 priority: 1  # 1=highest, 5=lowest
-restart_policy: always  # always, on-failure, manual
 
 # Dependencies (optional - for ordered startup)
 depends_on:
-  - data/redis
-  - data/postgres
+  - data-redis
+  - data-postgres
 
 # Resource hints (for monitoring/alerting)
 expected_containers: 3
@@ -61,11 +61,52 @@ documentation: https://wiki.company.com/transcoding
 health_check_url: http://localhost:8080/health
 ```
 
-**Benefits:**
-- ✅ Self-documenting
-- ✅ Easy to read/edit
-- ✅ Extensible (add fields anytime)
-- ✅ Machine-parseable
+### Field Reference
+
+| Field | Type | Required | Default | Description |
+|-------|------|----------|---------|-------------|
+| **description** | string | No | `""` | Human-readable description. Shown in `composer show` and `composer search`. |
+| **category** | string | No | `"uncategorized"` | Primary category for organization. Used for filtering with `--category` flag. Can be hierarchical (see subcategory). |
+| **subcategory** | string | No | `""` | Secondary category level. Displayed as `category/subcategory`. Used for finer-grained organization. |
+| **tags** | list of strings | No | `[]` | Tags for flexible filtering and searching. Used with `--tag` flag and `composer search`. |
+| **auto_start** | boolean | No | `false` | If `true`, stack will be started by `composer autostart` (e.g., on boot via systemd if configured). |
+| **priority** | integer (1-5) | No | `5` | Startup/shutdown priority. `1` = highest priority (starts first, stops last). `5` = lowest priority (starts last, stops first). Used with `--priority` flag. |
+| **depends_on** | list of strings | No | `[]` | List of stack names this stack depends on. When using `composer up <stack> --with-deps`, dependencies are started first in correct order. |
+| **expected_containers** | integer | No | `0` | Expected number of containers for this stack. Informational hint for monitoring/validation. |
+| **critical** | boolean | No | `false` | Whether this stack is critical for operations. Informational hint for monitoring/alerting. |
+| **owner** | string | No | `""` | Team or person responsible for this stack. Custom field for organization. |
+| **documentation** | string | No | `""` | URL to documentation or wiki page. Custom field for reference. |
+| **health_check_url** | string | No | `""` | URL for health check endpoint. Custom field for monitoring. |
+
+### How Fields Are Used
+
+**Organization & Discovery:**
+- `category`, `subcategory`, `tags` - Used by `composer list --category <cat>`, `composer list --tag <tag>`, and `composer search <term>`
+- `description` - Shown in `composer show <stack>` and `composer search` results
+- `name` - Primary identifier for all commands
+
+**Lifecycle Management:**
+- `auto_start` - Determines if stack is started by `composer autostart` (typically run on boot)
+- `priority` - Controls startup order when using `composer up --all --priority` (1=first, 5=last). Shutdown order is reversed.
+- `depends_on` - Ensures dependencies start before the stack when using `composer up <stack> --with-deps`
+
+**Metadata Management:**
+- All fields can be modified using `composer tag` and `composer category` commands
+- Metadata is persisted to `.stack-meta.yaml` when changed via CLI
+- Fields are extensible - add custom fields as needed (they'll be preserved but not used by commands)
+
+**Validation:**
+- `composer validate` checks that:
+  - `docker-compose.yml` exists for each stack
+  - Dependencies listed in `depends_on` exist
+  - Metadata files are valid YAML
+
+### Benefits
+- ✅ **Self-documenting** - Metadata lives alongside your compose files
+- ✅ **Git-friendly** - YAML format, easy to version control
+- ✅ **Extensible** - Add custom fields anytime without breaking existing functionality
+- ✅ **Machine-parseable** - Easy to integrate with other tools
+- ✅ **Non-invasive** - Doesn't modify your `docker-compose.yml` files
 
 ## Directory Structure
 

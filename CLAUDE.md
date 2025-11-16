@@ -188,14 +188,12 @@ All category/tag filters support shortcuts: `-c` for category, `-t` for tag.
 Stacks are configured via `.stack-meta.yaml` in each docker-compose directory:
 
 ```yaml
-name: transcoding
 description: "Video transcoding service"
 category: video
 subcategory: processing
 tags: [media, gpu, production]
 auto_start: true
 priority: 1  # 1=highest, 5=lowest
-restart_policy: always
 depends_on:
   - data-redis
   - data-postgres
@@ -206,7 +204,7 @@ documentation: https://wiki.example.com/transcoding
 health_check_url: http://localhost:8080/health
 ```
 
-All fields are optional except `name`. The tool is extensible - custom fields can be added without code changes.
+All fields are optional. Stack names are always derived from the directory path. The tool is extensible - custom fields can be added without code changes.
 
 ## Dependencies
 

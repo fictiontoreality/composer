@@ -16,7 +16,6 @@ class Stack:
     description: str = ""
     auto_start: bool = False
     priority: int = 5
-    restart_policy: str = "manual"
     depends_on: List[str] = field(default_factory=list)
     expected_containers: int = 0
     critical: bool = False
@@ -41,20 +40,22 @@ class Stack:
             with open(self.meta_file) as f:
                 meta = yaml.safe_load(f) or {}
                 for key, value in meta.items():
+                    # Skip 'name' - it's always derived from path.
+                    if key == 'name':
+                        continue
                     if hasattr(self, key):
                         setattr(self, key, value)
 
     def save_metadata(self) -> None:
         """Save metadata to .stack-meta.yaml."""
-        # Build metadata dict from current values
+        # Build metadata dict from current values.
+        # Note: 'name' is omitted - it's always derived from directory path.
         meta = {
-            'name': self.name,
             'description': self.description,
             'category': self.category,
             'tags': self.tags,
             'auto_start': self.auto_start,
             'priority': self.priority,
-            'restart_policy': self.restart_policy,
         }
 
         # Add optional fields if set

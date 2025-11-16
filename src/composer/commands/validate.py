@@ -1,3 +1,5 @@
+import yaml
+
 from composer.stack_manager import StackManager
 
 
@@ -11,6 +13,21 @@ def cmd_validate(manager: StackManager, args) -> None:
         # Check compose file exists
         if not stack.compose_file.exists():
             issues.append(f"  ✗ {stack.name}: docker-compose.yml not found")
+
+        # Check for name field mismatch in metadata
+        if stack.meta_file.exists():
+            try:
+                with open(stack.meta_file) as f:
+                    meta = yaml.safe_load(f) or {}
+                    if 'name' in meta and meta['name'] != stack.name:
+                        issues.append(
+                            f"  ⚠ {stack.name}: metadata contains 'name' field "
+                            f"('{meta['name']}') - name is derived from path and "
+                            f"cannot be overridden"
+                        )
+            except FileNotFoundError:
+                # File doesn't actually exist (can happen with mocking in tests).
+                pass
 
         # Check dependencies exist
         for dep in stack.depends_on:
