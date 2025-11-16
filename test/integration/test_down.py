@@ -1,11 +1,13 @@
 """Integration tests for down command."""
 
+from argparse import Namespace
+
+from composer.commands.down import cmd_down
+from composer.commands.up import cmd_up
+
 
 def test_down_single_stack(clean_stacks, capsys):
     """Test down command stops a single stack."""
-    from composer.commands.down import cmd_down
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
 
     # First start the stack
     up_args = Namespace(
@@ -34,9 +36,6 @@ def test_down_single_stack(clean_stacks, capsys):
 
 def test_down_all_stacks(clean_stacks, capsys):
     """Test down command stops all stacks."""
-    from composer.commands.down import cmd_down
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
 
     # Start all stacks
     up_args = Namespace(
@@ -59,9 +58,6 @@ def test_down_all_stacks(clean_stacks, capsys):
 
 def test_down_by_category(clean_stacks, capsys):
     """Test down command stops stacks by category."""
-    from composer.commands.down import cmd_down
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
 
     # Start all stacks
     up_args = Namespace(
@@ -89,9 +85,6 @@ def test_down_by_category(clean_stacks, capsys):
 
 def test_down_by_tag(clean_stacks, capsys):
     """Test down command stops stacks by tag."""
-    from composer.commands.down import cmd_down
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
 
     # Start all stacks
     up_args = Namespace(
@@ -119,9 +112,6 @@ def test_down_by_tag(clean_stacks, capsys):
 
 def test_down_reverse_priority(clean_stacks, capsys):
     """Test down command uses reverse priority order."""
-    from composer.commands.down import cmd_down
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
 
     # Start all stacks
     up_args = Namespace(

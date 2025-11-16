@@ -1,13 +1,13 @@
 """Integration tests for up command."""
 
+from argparse import Namespace
 import time
+
+from composer.commands.up import cmd_up
 
 
 def test_up_single_stack(clean_stacks, capsys):
     """Test up command starts a single stack."""
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
-
     args = Namespace(
         target="hello",
         all=False,
@@ -30,9 +30,6 @@ def test_up_single_stack(clean_stacks, capsys):
 
 def test_up_all_stacks(clean_stacks, capsys):
     """Test up command starts all stacks."""
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
-
     args = Namespace(
         target=None,
         all=True,
@@ -55,9 +52,6 @@ def test_up_all_stacks(clean_stacks, capsys):
 
 def test_up_by_category(clean_stacks, capsys):
     """Test up command starts stacks by category."""
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
-
     args = Namespace(
         target=None,
         all=False,
@@ -81,9 +75,6 @@ def test_up_by_category(clean_stacks, capsys):
 
 def test_up_by_tag(clean_stacks, capsys):
     """Test up command starts stacks by tag."""
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
-
     args = Namespace(
         target=None,
         all=False,
@@ -107,9 +98,6 @@ def test_up_by_tag(clean_stacks, capsys):
 
 def test_up_with_priority(clean_stacks, capsys):
     """Test up command respects priority ordering."""
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
-
     args = Namespace(
         target=None,
         all=True,
@@ -137,9 +125,6 @@ def test_up_with_priority(clean_stacks, capsys):
 
 def test_up_with_dependencies(clean_stacks, capsys):
     """Test up command starts dependencies."""
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
-
     args = Namespace(
         target="stack-c",
         all=False,

@@ -1,11 +1,12 @@
 """Integration tests for validate command."""
 
+from argparse import Namespace
+
+from composer.commands.validate import cmd_validate
+
 
 def test_validate_all_stacks_valid(clean_stacks, capsys):
     """Test validate command with all valid stacks."""
-    from composer.commands.validate import cmd_validate
-    from argparse import Namespace
-
     args = Namespace()
     cmd_validate(clean_stacks, args)
 
@@ -15,8 +16,6 @@ def test_validate_all_stacks_valid(clean_stacks, capsys):
 
 def test_validate_detects_missing_dependency(clean_stacks, capsys, tmp_path):
     """Test validate detects missing dependencies."""
-    from composer.commands.validate import cmd_validate
-    from argparse import Namespace
 
     # Temporarily modify stack-c to depend on non-existent stack
     stack_c = clean_stacks.get_stack("stack-c")

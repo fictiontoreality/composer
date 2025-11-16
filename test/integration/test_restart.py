@@ -1,12 +1,13 @@
 """Integration tests for restart command."""
 
+from argparse import Namespace
+
+from composer.commands.restart import cmd_restart
+from composer.commands.up import cmd_up
+
 
 def test_restart_single_stack(clean_stacks, capsys):
     """Test restart command restarts a single stack."""
-    from composer.commands.restart import cmd_restart
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
-
     # Start the stack first
     up_args = Namespace(
         target="hello",
@@ -39,10 +40,6 @@ def test_restart_single_stack(clean_stacks, capsys):
 
 def test_restart_all_stacks(clean_stacks, capsys):
     """Test restart command restarts all stacks."""
-    from composer.commands.restart import cmd_restart
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
-
     # Start all stacks
     up_args = Namespace(
         target=None,
@@ -70,10 +67,6 @@ def test_restart_all_stacks(clean_stacks, capsys):
 
 def test_restart_by_category(clean_stacks, capsys):
     """Test restart command restarts stacks by category."""
-    from composer.commands.restart import cmd_restart
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
-
     # Start all stacks
     up_args = Namespace(
         target=None,
@@ -107,10 +100,6 @@ def test_restart_by_category(clean_stacks, capsys):
 
 def test_restart_by_tag(clean_stacks, capsys):
     """Test restart command restarts stacks by tag."""
-    from composer.commands.restart import cmd_restart
-    from composer.commands.up import cmd_up
-    from argparse import Namespace
-
     # Start all stacks
     up_args = Namespace(
         target=None,

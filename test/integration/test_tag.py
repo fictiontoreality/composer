@@ -1,11 +1,12 @@
 """Integration tests for tag command."""
 
+from argparse import Namespace
+
+from composer.commands.tag import cmd_tag
+
 
 def test_tag_list(clean_stacks, capsys):
     """Test tag list command."""
-    from composer.commands.tag import cmd_tag
-    from argparse import Namespace
-
     args = Namespace(tag_action='list')
     cmd_tag(clean_stacks, args)
 
@@ -19,9 +20,6 @@ def test_tag_list(clean_stacks, capsys):
 
 def test_tag_add(clean_stacks, capsys):
     """Test adding tags to a stack."""
-    from composer.commands.tag import cmd_tag
-    from argparse import Namespace
-
     args = Namespace(
         tag_action='add',
         stack='hello',
@@ -40,9 +38,6 @@ def test_tag_add(clean_stacks, capsys):
 
 def test_tag_add_duplicate(clean_stacks, capsys):
     """Test adding duplicate tags."""
-    from composer.commands.tag import cmd_tag
-    from argparse import Namespace
-
     args = Namespace(
         tag_action='add',
         stack='hello',
@@ -56,9 +51,6 @@ def test_tag_add_duplicate(clean_stacks, capsys):
 
 def test_tag_remove(clean_stacks, capsys):
     """Test removing tags from a stack."""
-    from composer.commands.tag import cmd_tag
-    from argparse import Namespace
-
     args = Namespace(
         tag_action='remove',
         stack='hello',
@@ -76,9 +68,6 @@ def test_tag_remove(clean_stacks, capsys):
 
 def test_tag_rename(clean_stacks, capsys):
     """Test renaming a tag across all stacks."""
-    from composer.commands.tag import cmd_tag
-    from argparse import Namespace
-
     args = Namespace(
         tag_action='rename',
         old_tag='dev',

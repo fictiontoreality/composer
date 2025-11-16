@@ -1,11 +1,12 @@
 """Integration tests for category command."""
 
+from argparse import Namespace
+
+from composer.commands.category import cmd_category
+
 
 def test_category_list(clean_stacks, capsys):
     """Test category list command."""
-    from composer.commands.category import cmd_category
-    from argparse import Namespace
-
     args = Namespace(category_action='list')
     cmd_category(clean_stacks, args)
 
@@ -17,9 +18,6 @@ def test_category_list(clean_stacks, capsys):
 
 def test_category_list_with_subcategories(clean_stacks, capsys):
     """Test category list shows subcategories."""
-    from composer.commands.category import cmd_category
-    from argparse import Namespace
-
     args = Namespace(category_action='list')
     cmd_category(clean_stacks, args)
 
@@ -30,9 +28,6 @@ def test_category_list_with_subcategories(clean_stacks, capsys):
 
 def test_category_set(clean_stacks, capsys):
     """Test setting category for a stack."""
-    from composer.commands.category import cmd_category
-    from argparse import Namespace
-
     args = Namespace(
         category_action='set',
         stack='hello',
@@ -52,9 +47,6 @@ def test_category_set(clean_stacks, capsys):
 
 def test_category_set_with_subcategory(clean_stacks, capsys):
     """Test setting category with subcategory."""
-    from composer.commands.category import cmd_category
-    from argparse import Namespace
-
     args = Namespace(
         category_action='set',
         stack='stack-d',
@@ -75,9 +67,6 @@ def test_category_set_with_subcategory(clean_stacks, capsys):
 
 def test_category_rename(clean_stacks, capsys):
     """Test renaming a category across all stacks."""
-    from composer.commands.category import cmd_category
-    from argparse import Namespace
-
     args = Namespace(
         category_action='rename',
         old_category='test',

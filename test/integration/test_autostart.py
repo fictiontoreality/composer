@@ -1,11 +1,12 @@
 """Integration tests for autostart command."""
 
+from argparse import Namespace
+
+from composer.commands.autostart import cmd_autostart
+
 
 def test_autostart_starts_configured_stacks(clean_stacks, capsys):
     """Test autostart command starts configured stacks."""
-    from composer.commands.autostart import cmd_autostart
-    from argparse import Namespace
-
     args = Namespace()
 
     try:
@@ -23,8 +24,6 @@ def test_autostart_starts_configured_stacks(clean_stacks, capsys):
 
 def test_autostart_priority_order(clean_stacks, capsys):
     """Test autostart respects priority order."""
-    from composer.commands.autostart import cmd_autostart
-    from argparse import Namespace
 
     # Temporarily set another stack to auto-start with different priority
     stack_a = clean_stacks.get_stack("stack-a")

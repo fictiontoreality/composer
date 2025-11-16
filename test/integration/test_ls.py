@@ -1,11 +1,12 @@
 """Integration tests for ls command."""
 
+from argparse import Namespace
+
+from composer.commands.ls import cmd_ls
+
 
 def test_ls_lists_all_stacks(clean_stacks, capsys):
     """Test ls command lists all test stacks."""
-    from composer.commands.ls import cmd_ls
-    from argparse import Namespace
-
     args = Namespace(category=None, tag=None)
     cmd_ls(clean_stacks, args)
 
@@ -19,9 +20,6 @@ def test_ls_lists_all_stacks(clean_stacks, capsys):
 
 def test_ls_filter_by_category(clean_stacks, capsys):
     """Test ls command filters by category."""
-    from composer.commands.ls import cmd_ls
-    from argparse import Namespace
-
     args = Namespace(category="test", tag=None)
     cmd_ls(clean_stacks, args)
 
@@ -35,9 +33,6 @@ def test_ls_filter_by_category(clean_stacks, capsys):
 
 def test_ls_filter_by_tag(clean_stacks, capsys):
     """Test ls command filters by tag."""
-    from composer.commands.ls import cmd_ls
-    from argparse import Namespace
-
     args = Namespace(category=None, tag="dev")
     cmd_ls(clean_stacks, args)
 
@@ -49,9 +44,6 @@ def test_ls_filter_by_tag(clean_stacks, capsys):
 
 def test_ls_shows_autostart_indicator(clean_stacks, capsys):
     """Test ls command shows auto-start indicator."""
-    from composer.commands.ls import cmd_ls
-    from argparse import Namespace
-
     args = Namespace(category=None, tag=None)
     cmd_ls(clean_stacks, args)
 

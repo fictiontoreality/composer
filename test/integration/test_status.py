@@ -1,11 +1,12 @@
 """Integration tests for status command."""
 
+from argparse import Namespace
+
+from composer.commands.status import cmd_status
+
 
 def test_status_shows_all_stacks(clean_stacks, capsys):
     """Test status command shows all stacks."""
-    from composer.commands.status import cmd_status
-    from argparse import Namespace
-
     args = Namespace(category=None, tag=None)
     cmd_status(clean_stacks, args)
 
@@ -19,9 +20,6 @@ def test_status_shows_all_stacks(clean_stacks, capsys):
 
 def test_status_filter_by_category(clean_stacks, capsys):
     """Test status command filters by category."""
-    from composer.commands.status import cmd_status
-    from argparse import Namespace
-
     args = Namespace(category="test", tag=None)
     cmd_status(clean_stacks, args)
 
@@ -33,9 +31,6 @@ def test_status_filter_by_category(clean_stacks, capsys):
 
 def test_status_shows_stopped_stacks(clean_stacks, capsys):
     """Test status command shows stopped stacks."""
-    from composer.commands.status import cmd_status
-    from argparse import Namespace
-
     args = Namespace(category=None, tag=None)
     cmd_status(clean_stacks, args)
 
@@ -46,8 +41,6 @@ def test_status_shows_stopped_stacks(clean_stacks, capsys):
 
 def test_status_shows_running_stacks(clean_stacks, capsys):
     """Test status command shows running stacks correctly."""
-    from composer.commands.status import cmd_status
-    from argparse import Namespace
 
     # Start a stack
     stack = clean_stacks.get_stack("hello")
