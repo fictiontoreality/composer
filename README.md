@@ -266,9 +266,10 @@ Requires=docker.service
 
 [Service]
 Type=oneshot
+# Note: Update composer path as needed (`which composer`).
 ExecStart=/usr/local/bin/composer autostart
+WorkingDirectory=/path/to/your/docker/compose/stacks
 RemainAfterExit=yes
-# Note: Update the path above to match where composer is installed (run 'which composer' to find it)
 
 [Install]
 WantedBy=multi-user.target

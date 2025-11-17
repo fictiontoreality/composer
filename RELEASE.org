@@ -1,15 +1,8 @@
 TODO for release.
 
-* Top Priority Items
+* TODO Top Priority Items
 Get these done if nothing else.
 
-** TODO Setup GitHub Actions CI/CD
-Create =.github/workflows/ci.yml=:
-- Run tests on multiple Python versions (3.10, 3.11, 3.12)
-- Run tests on multiple OSes (ubuntu, macos, windows)
-- Check code coverage
-- Lint with ruff/black
-- Type checking with mypy (if you add type hints)
 ** TODO Create CHANGELOG.md
 Follow [[https://keepachangelog.com/][Keep a Changelog]] format. For v0.1.0, document all features.
 ** TODO Add screenshots/demo GIF to README
@@ -40,44 +33,34 @@ Follow [[https://keepachangelog.com/][Keep a Changelog]] format. For v0.1.0, doc
    - Will you use semantic versioning?
    - How will you handle breaking changes?
 ** TODO Create SECURITY.md
-   Security policy:
-   - How to report vulnerabilities
-   - Supported versions
-   - Security update policy
-* Core Release Tasks
-** TODO review all code once more
-** TODO test for a week in the wild
+Security policy:
+- How to report vulnerabilities
+- Supported versions
+- Security update policy
+* TODO review all code once more
+* TODO test for a week in the wild
+* TODO Documentation & User Experience
 ** TODO revamp README
-*** TODO restructure for humans
-*** TODO document all commands
-** TODO publish package on pypi
-** TODO push everything to github
-** TODO make release announcements
-
-* Documentation & User Experience
+*** TODO Restructure for humans
+*** TODO Document all commands
+*** TODO Show usage examples
+Create example repository showing:
+- Example stack setup
+- .stack-meta.yaml examples
+- Complete workflow from setup to management
+*** TODO Create architecture diagram
+Visual representation of how StackManager, Stack, and commands interact.
+*** TODO List alternatives
+Why not Portainer, etc.?
 ** TODO Create CONTRIBUTING.md
    - How to report bugs/request features
    - Development setup instructions
    - How to run tests
    - Code style guidelines
    - PR process
-** TODO Create architecture diagram
-Visual representation of how StackManager, Stack, and commands interact.
-** TODO Write blog post / case study
-Write about:
-- Problem you solved
-- Design decisions (why dataclass? why no database?)
-- Challenges overcome (e.g., the Path.cwd() default argument bug!)
-- What you learned
-- Architecture evolution
-** TODO Show usage examples
-Create example repository showing:
-- Example stack setup
-- .stack-meta.yaml examples
-- Complete workflow from setup to management
 ** TODO Create roadmap document
 Shows project has longevity.
-* GitHub Repository Setup
+* TODO GitHub Repository Setup
 ** TODO Add GitHub topics
 Topics for discoverability: docker, docker-compose, devops, python, cli, container-management
 ** TODO Add repository badges to README
@@ -91,7 +74,7 @@ Create =.github/ISSUE_TEMPLATE/=:
 - Bug report template
 - Feature request template
 - Question template
-* Code Quality & Testing
+* TODO Code Quality & Testing
 ** TODO Multi-platform testing
 Mention this has only been tested on Linux, but should work on MacOS. Unsure about Windows.
 ** TODO Python version testing
@@ -112,7 +95,7 @@ If not already complete:
 Add to CI:
 - =pip-audit= for dependency vulnerabilities
 - =bandit= for code security issues
-* Release Process
+* TODO Release Process
 ** TODO Create git tag
    #+begin_src bash
    git tag -a v0.1.0 -m "Initial release"
@@ -123,7 +106,7 @@ Add to CI:
    Create GitHub release with:
    - Release notes from CHANGELOG
    - Binary distributions attached (wheels)
-* Pre-Release Checklist
+* TODO Pre-Release Checklist
 ** TODO Verify all tests pass on all platforms
 ** TODO Verify documentation is complete and accurate
 ** TODO Verify CHANGELOG is up to date
@@ -131,7 +114,18 @@ Add to CI:
 ** TODO Verify no sensitive data in repository
 ** TODO Verify git tags are created
 ** TODO Verify test PyPI upload works
-* Post-Release
+* TODO Release
+Order depends on whether I went with github actions for publishing or not.
+** TODO publish package to pypi
+** TODO Setup GitHub Actions CI/CD
+Create =.github/workflows/ci.yml=:
+- Run tests on multiple Python versions (3.10, 3.11, 3.12)
+- Run tests on multiple OSes (ubuntu, macos, windows)
+- Check code coverage
+- Lint with ruff/black
+- Type checking with mypy (if you add type hints)
+** TODO push changes to github
+* TODO Post-Release
 ** TODO Announce on multiple venues
 - Reddit: r/docker, r/selfhosted, r/Python
 - Hacker News (Show HN)
@@ -142,3 +136,11 @@ Add to CI:
 - PyPI downloads tracking
 - GitHub stars/forks tracking
 - Issue/PR response plan
+
+** TODO Write blog post / case study
+Write about:
+- Problem you solved
+- Design decisions (why dataclass? why no database?)
+- Challenges overcome (e.g., the Path.cwd() default argument bug!)
+- What you learned
+- Architecture evolution
